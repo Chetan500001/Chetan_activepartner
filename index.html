@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a121b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Active Partner">
+  <link rel="apple-touch-icon" href="active-partner-192.png">
+  <link rel="manifest" href="manifest.json">
+  <title>Active Partner</title>
+  <style>
+    :root{color-scheme:dark;--paper:#0a121b;--ink:#eef5f3;--muted:#a3b2b8;--green:#66d9a4;--green-2:#12352f;--line:#ffffff1c;--white:#121e2a;--orange:#f0a878}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 9% 7%,#1c3942 0,transparent 36%),radial-gradient(ellipse at 93% 27%,#282444 0,transparent 31%),radial-gradient(ellipse at 52% 100%,#14312d 0,transparent 39%),var(--paper);color:var(--ink);font:16px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,select{font:inherit;color:inherit}
+    button{touch-action:manipulation}
+    .app{width:min(100%,540px);min-height:100dvh;margin:auto;padding:max(22px,env(safe-area-inset-top)) 22px max(25px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
+    header{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.03em;font-size:18px}
+    .brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#9cecc7,#52bd9b 55%,#8876dd);color:#0b1d1c;box-shadow:0 5px 18px #66d9a42e}
+    .brand-mark svg{width:21px;height:21px}
+    .language{padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:#111c27;color:var(--ink);font-size:13px;outline:none}
+    main{flex:1;display:flex;flex-direction:column;padding-top:clamp(36px,7vh,66px)}
+    .intro{margin-bottom:25px}
+    .overline{margin:0 0 12px;color:#89e6bb;font-size:11px;letter-spacing:.16em;font-weight:750;text-transform:uppercase}
+    h1{max-width:430px;margin:0;font-size:clamp(34px,8vw,47px);line-height:1.05;letter-spacing:-.055em;font-weight:650}
+    .subtitle{max-width:350px;margin:13px 0 0;color:var(--muted);font-size:15px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin:0 1px 11px;color:#d0dcda;font-weight:650;font-size:13px}
+    .section-title span:last-child{font-size:10px;letter-spacing:.12em;font-weight:650;color:#8fa4a9}
+    .topics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .topic{min-height:111px;padding:14px 14px 13px;border:1px solid #ffffff17;border-radius:20px;background:linear-gradient(150deg,#14222d,#101a25);display:flex;flex-direction:column;align-items:flex-start;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
+    .topic:hover{transform:translateY(-2px);border-color:#ffffff39;box-shadow:0 10px 24px #0003}
+    .topic.selected{background:linear-gradient(145deg,#163d37,#20263b);border-color:#78dfb2;box-shadow:inset 0 0 0 1px #78dfb255,0 7px 24px #40c79817}
+    .topic:focus-visible,.talk:focus-visible,.language:focus-visible{outline:3px solid #85edbd;outline-offset:3px}
+    .topic-head{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .topic-icon{width:32px;height:32px;border-radius:11px;background:#20332f;color:#8ee5ba;display:grid;place-items:center}
+    .topic-mood .topic-icon{background:#302b47;color:#c4b7ff}
+    .topic-learn .topic-icon{background:#3b3225;color:#ffd18b}
+    .topic-listen .topic-icon{background:#3d2934;color:#ffabc0}
+    .topic-icon svg{width:18px;height:18px}
+    .check{width:19px;height:19px;border:1px solid #ffffff3d;border-radius:50%;display:grid;place-items:center;color:transparent;font-size:12px}
+    .selected .check{background:#7fe3b7;border-color:#7fe3b7;color:#10251d}
+    .topic-name{font-size:14px;font-weight:680;letter-spacing:-.015em}
+    .topic-hint{margin-top:2px;color:#9aabb0;font-size:11px}
+    .talk-area{margin-top:auto;padding-top:26px;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .mic-shell{position:relative;width:112px;height:112px;display:grid;place-items:center;margin:0 auto 11px}
+    .mic-halo{position:absolute;inset:9px;border-radius:50%;background:#66d9a41f;box-shadow:0 0 35px #66d9a41b;transition:transform .3s,background .3s}
+    .talk{position:relative;width:86px;height:86px;border:1px solid #d3fff1a1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 34% 25%,#a9f1d0 0,#60caa5 30%,#347e74 60%,#34456d 100%);color:#102a2a;box-shadow:inset 0 2px 9px #ffffffa1,0 10px 30px #43c8ad42,0 0 24px #8980dd21;cursor:pointer;transition:transform .25s,filter .25s,background .3s;isolation:isolate}
+    .talk:hover{transform:scale(1.045)}
+    .talk svg{position:relative;z-index:2;width:27px;height:27px}
+    .talk::before,.talk::after{content:"";position:absolute;inset:-8px;border:1px solid #9aeccb75;border-radius:50%;opacity:0;z-index:0;pointer-events:none}
+    .talk.active{background:radial-gradient(circle at 34% 25%,#d6fff0 0,#79e3bd 25%,#49ab9e 52%,#5e68ab 100%);box-shadow:inset 0 2px 8px #ffffffbe,0 0 34px #67d8b76e,0 10px 30px #315a4250}
+    .talk.active::before{animation:orb-ring 2.2s ease-out infinite}
+    .talk.active::after{animation:orb-ring 2.2s ease-out infinite .75s}
+    .talk.speaking{filter:hue-rotate(20deg) saturate(1.12)}
+    .talk.speaking::before,.talk.speaking::after{animation-duration:1.2s}
+    .sound-bars{position:relative;z-index:2;display:none;align-items:center;justify-content:center;gap:4px;height:30px}
+    .sound-bars i{display:block;width:3px;height:9px;border-radius:4px;background:#fff;opacity:.95}
+    .talk.active svg{display:none}
+    .talk.active .sound-bars{display:flex}
+    .talk.active .sound-bars i{animation:wave .8s ease-in-out infinite alternate}
+    .talk.active .sound-bars i:nth-child(2),.talk.active .sound-bars i:nth-child(4){animation-delay:.18s}
+    .talk.active .sound-bars i:nth-child(3){animation-delay:.34s}
+    @keyframes orb-ring{0%{transform:scale(.9);opacity:.65}100%{transform:scale(1.42);opacity:0}}
+    @keyframes wave{from{height:7px}to{height:25px}}
+    .talk-area.active .mic-halo{background:#69d7a832;transform:scale(1.17);box-shadow:0 0 45px #6cddad42}
+    .talk-area.speaking .mic-halo{background:#a49af13a;box-shadow:0 0 45px #9f8ef548}
+    .talk-label{font-size:15px;font-weight:700;letter-spacing:-.01em}
+    .status{min-height:20px;margin:4px auto 0;color:#a9bec0;font-size:12px}
+    .permission-help{width:min(100%,390px);margin:12px auto 0;padding:13px 15px;border:1px solid #7a674b;border-radius:15px;background:#27241e;color:#f5d7a8;text-align:left;font-size:12px;line-height:1.45}
+    .permission-help[hidden]{display:none}
+    .permission-help p{margin:0 0 10px}
+    .retry{border:0;border-radius:999px;padding:8px 13px;background:var(--green);color:#fff;font-size:12px;font-weight:650;cursor:pointer}
+    .footer{margin:18px 0 0;text-align:center;color:#82959b;font-size:11px}
+    .notice{position:fixed;inset:auto 18px max(18px,env(safe-area-inset-bottom));width:min(420px,calc(100% - 36px));margin:auto;padding:13px 16px;background:#e8eef0;color:#17232a;border-radius:14px;font-size:13px;text-align:center;box-shadow:0 10px 30px #0005;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
+    .notice.show{opacity:1;transform:translateY(0)}
+    @media(max-height:740px){main{padding-top:28px}.intro{margin-bottom:18px}.topic{min-height:99px;padding:11px 12px}.talk-area{padding-top:19px}.mic-shell{width:98px;height:98px}.talk{width:76px;height:76px}}
+    @media(max-width:360px){.app{padding-left:16px;padding-right:16px}.topics{gap:8px}.topic{min-height:104px}.topic-name{font-size:13px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5c2.2-5.8 4.3-5.8 7.5 0s5.3 5.8 7.5 0M4.5 17c2.2-5.8 4.3-5.8 7.5 0s5.3 5.8 7.5 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Active Partner</div>
+      <select class="language" id="language" aria-label="Assistant language"><option value="hi">हिन्दी</option><option value="pa">ਪੰਜਾਬੀ</option><option value="en">English</option><option value="tr">Türkçe</option></select>
+    </header>
+    <main>
+      <section class="intro"><p class="overline" id="overline">A little space for you</p><h1 id="greeting">Aaj kis baare<br>mein baat karein?</h1><p class="subtitle" id="subtitle">Ek topic chuniye. Phir mic dabakar bolna shuru karein.</p></section>
+      <div class="section-title"><span id="chooseTitle">Aaj kya baat karein?</span><span id="chooseHint">EK CHUNIYE</span></div>
+      <div class="topics" id="topics" role="group" aria-label="Choose a topic"></div>
+      <section class="talk-area" id="talkArea">
+        <div class="mic-shell"><div class="mic-halo"></div><button class="talk" id="talk" aria-label="Start talking"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3m-3 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button></div>
+        <div class="talk-label" id="talkLabel">Baat shuru karein</div><div class="status" id="status" aria-live="polite">Aapki awaaz ka intezaar hai</div>
+        <div class="permission-help" id="permissionHelp" hidden><p id="permissionText"></p><button class="retry" id="retryMic" type="button">Phir se try karein</button></div>
+      </section>
+    </main>
+    <p class="footer" id="footer">Aapki baat. Aapki pace. Aapka space.</p>
+  </div>
+  <div class="notice" id="notice" role="status"></div>
+  <script>
+    const phrases={
+      hi:{overline:'Aapke liye ek sukoon bhari jagah',greeting:'Aaj kis baare<br>mein baat karein?',subtitle:'Ek topic chuniye. Phir mic dabakar bolna shuru karein.',choose:'Aaj kya baat karein?',chooseHint:'EK CHUNIYE',start:'Baat shuru karein',stop:'Baat rok dein',live:'Live talk chal rahi hai',ready:'Aapki awaaz ka intezaar hai',permission:'Microphone connect ho raha hai…',listening:'Haan, boliye. Main sun raha hoon.',thinking:'Aapki baat samajh raha hoon…',speaking:'Main bol raha hoon…',micBlocked:'Browser mein mic block hai',permissionHelp:'Address bar ke left site icon par click karein → Site settings → Microphone ko Allow karein → page reload karke dobara try karein.',retry:'Phir se try karein',unsupported:'Is browser mein voice input support nahi hai. Android par Chrome try karein.',permissionError:'Microphone permission nahi mili.',network:'Voice service connect nahi ho paayi. Internet check karke dobara try karein.',quiet:'Awaaz nahi mili. Mic dabakar phir se boliye.',prompts:{day:'Namaste! Aaj ke din mein kya kuch achha hua, ya kya thoda mushkil raha?',mood:'Abhi aap andar se kaisa mehsoos kar rahe hain? Aaram se batayein.',learn:'Chaliye kuch naya explore karte hain. Aaj kis cheez ke baare mein jaanne ka mann hai?',listen:'Main yahan hoon. Jo baat dil mein hai, apne pace se share karein.'},responses:{day:'Aaj ke din ka kaunsa pal aapko sabse zyada yaad aa raha hai?',mood:'Kya kuch aisa hua jisne aapko aisa mehsoos karwaya?',learn:'Is topic ke baare mein aap pehle se kya jaante hain?',listen:'Iss baat ka aapke liye sabse important hissa kya hai?'},footer:'Aapki baat. Aapki pace. Aapka space.',topics:[['day','Aaj ka din','Dil kholkar batayein'],['mood','Mood check-in','Abhi kaisa lag raha hai?'],['learn','Kuch naya','Koi nayi soch ya idea'],['listen','Bas suno','Jo mann mein ho']]},
+      pa:{overline:'ਤੁਹਾਡੇ ਲਈ ਇੱਕ ਛੋਟੀ ਜਿਹੀ ਥਾਂ',greeting:'ਅੱਜ ਕਿਸ ਬਾਰੇ<br>ਗੱਲ ਕਰੀਏ?',subtitle:'ਇੱਕ ਵਿਸ਼ਾ ਚੁਣੋ। ਫਿਰ ਮਾਈਕ ਦਬਾ ਕੇ ਬੋਲਣਾ ਸ਼ੁਰੂ ਕਰੋ।',choose:'ਅੱਜ ਕੀ ਗੱਲ ਕਰੀਏ?',chooseHint:'ਇੱਕ ਚੁਣੋ',start:'ਗੱਲ ਸ਼ੁਰੂ ਕਰੋ',stop:'ਗੱਲ ਰੋਕੋ',live:'ਲਾਈਵ ਗੱਲਬਾਤ ਚੱਲ ਰਹੀ ਹੈ',ready:'ਤੁਹਾਡੀ ਆਵਾਜ਼ ਦੀ ਉਡੀਕ ਹੈ',permission:'ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਜੁੜ ਰਿਹਾ ਹੈ…',listening:'ਹਾਂ ਜੀ, ਦੱਸੋ। ਮੈਂ ਸੁਣ ਰਿਹਾ ਹਾਂ।',thinking:'ਤੁਹਾਡੀ ਗੱਲ ਸਮਝ ਰਿਹਾ ਹਾਂ…',speaking:'ਮੈਂ ਬੋਲ ਰਿਹਾ ਹਾਂ…',micBlocked:'ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਮਾਈਕ ਬੰਦ ਹੈ',permissionHelp:'ਐਡਰੈੱਸ ਬਾਰ ਦੇ ਖੱਬੇ ਸਾਈਟ ਆਈਕਨ ਤੇ ਕਲਿੱਕ ਕਰੋ → Site settings → Microphone ਨੂੰ Allow ਕਰੋ → ਪੇਜ ਮੁੜ ਲੋਡ ਕਰਕੇ ਕੋਸ਼ਿਸ਼ ਕਰੋ।',retry:'ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ',unsupported:'ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਆਵਾਜ਼ ਦੀ ਸਹੂਲਤ ਨਹੀਂ ਹੈ। Android ਉੱਤੇ Chrome ਅਜ਼ਮਾਓ।',permissionError:'ਮਾਈਕ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਮਿਲੀ।',network:'ਆਵਾਜ਼ ਸੇਵਾ ਨਾਲ ਜੁੜ ਨਹੀਂ ਸਕੇ। ਇੰਟਰਨੈੱਟ ਜਾਂਚ ਕੇ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।',quiet:'ਆਵਾਜ਼ ਨਹੀਂ ਸੁਣੀ। ਮਾਈਕ ਦਬਾ ਕੇ ਮੁੜ ਬੋਲੋ।',prompts:{day:'ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਅੱਜ ਦੇ ਦਿਨ ਵਿੱਚ ਕੀ ਚੰਗਾ ਰਿਹਾ ਜਾਂ ਕੀ ਔਖਾ ਸੀ?',mood:'ਇਸ ਵੇਲੇ ਤੁਸੀਂ ਅੰਦਰੋਂ ਕਿਵੇਂ ਮਹਿਸੂਸ ਕਰ ਰਹੇ ਹੋ? ਆਰਾਮ ਨਾਲ ਦੱਸੋ।',learn:'ਆਓ ਕੁਝ ਨਵਾਂ ਜਾਣੀਏ। ਅੱਜ ਕਿਸ ਚੀਜ਼ ਬਾਰੇ ਸਿੱਖਣ ਦਾ ਮਨ ਹੈ?',listen:'ਮੈਂ ਇੱਥੇ ਹਾਂ। ਜੋ ਦਿਲ ਵਿੱਚ ਹੈ, ਆਪਣੇ ਸਮੇਂ ਨਾਲ ਸਾਂਝਾ ਕਰੋ।'},responses:{day:'ਅੱਜ ਦੇ ਦਿਨ ਦਾ ਕਿਹੜਾ ਪਲ ਤੁਹਾਨੂੰ ਸਭ ਤੋਂ ਵੱਧ ਯਾਦ ਆ ਰਿਹਾ ਹੈ?',mood:'ਕੀ ਕੁਝ ਅਜਿਹਾ ਹੋਇਆ ਜਿਸ ਕਰਕੇ ਤੁਸੀਂ ਇਹ ਮਹਿਸੂਸ ਕਰ ਰਹੇ ਹੋ?',learn:'ਇਸ ਵਿਸ਼ੇ ਬਾਰੇ ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਤੋਂ ਕੀ ਪਤਾ ਹੈ?',listen:'ਇਸ ਗੱਲ ਦਾ ਤੁਹਾਡੇ ਲਈ ਸਭ ਤੋਂ ਅਹਿਮ ਹਿੱਸਾ ਕੀ ਹੈ?'},footer:'ਤੁਹਾਡੀ ਗੱਲ। ਤੁਹਾਡੀ ਰਫ਼ਤਾਰ। ਤੁਹਾਡੀ ਥਾਂ।',topics:[['day','ਅੱਜ ਦਾ ਦਿਨ','ਖੁੱਲ੍ਹ ਕੇ ਦੱਸੋ'],['mood','ਮਨ ਦੀ ਗੱਲ','ਹੁਣ ਕਿਵੇਂ ਮਹਿਸੂਸ ਕਰਦੇ ਹੋ?'],['learn','ਕੁਝ ਨਵਾਂ','ਨਵਾਂ ਵਿਚਾਰ ਜਾਂ ਗੱਲ'],['listen','ਬੱਸ ਸੁਣੋ','ਜੋ ਮਨ ਵਿੱਚ ਹੋਵੇ']]},
+      en:{overline:'A little space for you',greeting:'What would you<br>like to talk about?',subtitle:'Pick a topic, then tap the mic to start talking.',choose:'What’s on your mind?',chooseHint:'PICK ONE',start:'Start talking',stop:'End conversation',live:'Live talk is on',ready:'Ready when you are',permission:'Connecting to your microphone…',listening:'Go ahead. I’m listening.',thinking:'Taking that in…',speaking:'Your partner is speaking…',micBlocked:'Microphone is blocked in the browser',permissionHelp:'Click the site icon left of the address bar → Site settings → set Microphone to Allow → reload this page and try again.',retry:'Try again',unsupported:'Voice input is not available in this browser. Try Chrome on Android.',permissionError:'Microphone permission was not granted.',network:'Could not connect to the voice service. Check your connection and try again.',quiet:'I didn’t hear anything. Tap the mic and try again.',prompts:{day:'Hi! What was one good part of your day, and what felt a little hard?',mood:'How are you feeling right now? Take your time telling me.',learn:'Let’s explore something new. What are you curious about today?',listen:'I’m here with you. Share whatever is on your mind, at your own pace.'},responses:{day:'What moment from today has stayed with you the most?',mood:'Did something happen that left you feeling this way?',learn:'What do you already know about this topic?',listen:'What feels like the most important part of this for you?'},footer:'Your thoughts. Your pace. Your space.',topics:[['day','My day','Talk about how it went'],['mood','Mood check-in','How are you feeling?'],['learn','Something new','Explore an idea together'],['listen','Just listen','Whatever’s on your mind']]},
+      tr:{overline:'Kendin için küçük bir alan',greeting:'Bugün ne hakkında<br>konuşalım?',subtitle:'Bir konu seçin, sonra mikrofona dokunup konuşmaya başlayın.',choose:'Aklınızda ne var?',chooseHint:'BİRİNİ SEÇİN',start:'Konuşmaya başlayın',stop:'Sohbeti bitir',live:'Canlı sohbet açık',ready:'Hazır olduğunuzda buradayım',permission:'Mikrofona bağlanılıyor…',listening:'Buyurun, sizi dinliyorum.',thinking:'Söylediklerinizi düşünüyorum…',speaking:'Partneriniz konuşuyor…',micBlocked:'Tarayıcıda mikrofon engellenmiş',permissionHelp:'Adres çubuğunun solundaki site simgesine tıklayın → Site settings → Microphone için Allow seçin → sayfayı yenileyip tekrar deneyin.',retry:'Tekrar deneyin',unsupported:'Bu tarayıcıda sesli giriş kullanılamıyor. Android’de Chrome’u deneyin.',permissionError:'Mikrofon izni verilmedi.',network:'Ses hizmetine bağlanılamadı. Bağlantınızı kontrol edip tekrar deneyin.',quiet:'Sesinizi duyamadım. Mikrofona dokunup tekrar deneyin.',prompts:{day:'Merhaba! Bugün gününüzün güzel ya da zor geçen kısmı neydi?',mood:'Şu anda kendinizi nasıl hissediyorsunuz? Rahatça anlatın.',learn:'Hadi yeni bir şey keşfedelim. Bugün neyi merak ediyorsunuz?',listen:'Buradayım. Aklınızdakileri kendi hızınızda paylaşabilirsiniz.'},responses:{day:'Bugünden aklınızda en çok kalan an hangisi?',mood:'Böyle hissetmenize neden olan bir şey oldu mu?',learn:'Bu konu hakkında şimdiden neler biliyorsunuz?',listen:'Bunun sizin için en önemli kısmı ne?'},footer:'Sizin düşünceleriniz. Sizin hızınız. Sizin alanınız.',topics:[['day','Günüm','Gününüzü anlatın'],['mood','Ruh halim','Kendinizi nasıl hissediyorsunuz?'],['learn','Yeni bir şey','Bir fikri birlikte keşfedelim'],['listen','Sadece dinle','Aklınızdan ne geçiyorsa']]}
+    };
+    const icon={day:'<path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42m-9.88 9.88-1.42 1.42"/><circle cx="12" cy="12" r="4"/>',mood:'<path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/><circle cx="12" cy="12" r="9"/>',learn:'<path d="M9 18h6m-5 3h4m-2-19a7 7 0 0 0-4 12.75c.55.37 1 1.02 1 1.66V17h6v-1.6c0-.64.45-1.29 1-1.65A7 7 0 0 0 12 2Z"/>',listen:'<path d="M12 18V5m0 13c-1.1 0-2-.9-2-2V9a2 2 0 0 1 4 0v7c0 1.1-.9 2-2 2Zm-5-7v2a5 5 0 0 0 10 0v-2m-5 10v2"/>'};
+    const el=id=>document.getElementById(id);
+    let language='hi',selectedTopic='day',active=false,phase='idle',permissionBlocked=false,noticeTimer=0,peer=null,microphone=null,events=null,remoteAudio=null,closingTimer=0;
+    function render(){const t=phrases[language];el('overline').textContent=t.overline;el('greeting').innerHTML=t.greeting;el('subtitle').textContent=t.subtitle;el('chooseTitle').textContent=t.choose;el('chooseHint').textContent=t.chooseHint;el('talkLabel').textContent=active?(phase==='speaking'?t.speaking:t.live):t.start;el('status').textContent=active?(phase==='connecting'?t.permission:phase==='speaking'?t.speaking:phase==='thinking'?t.thinking:t.listening):(permissionBlocked?t.micBlocked:t.ready);el('footer').textContent=t.footer;el('talk').classList.toggle('active',active);el('talk').classList.toggle('speaking',phase==='speaking');el('talkArea').classList.toggle('active',active);el('talkArea').classList.toggle('speaking',phase==='speaking');el('talk').setAttribute('aria-label',active?t.stop:t.start);el('permissionHelp').hidden=!permissionBlocked;el('permissionText').textContent=permissionBlocked?t.permissionHelp:'';el('retryMic').textContent=t.retry;el('language').disabled=active;el('topics').replaceChildren(...t.topics.map(([id,name,hint])=>{const b=document.createElement('button');b.type='button';b.disabled=active;b.className='topic topic-'+id+(id===selectedTopic?' selected':'');b.setAttribute('aria-pressed',id===selectedTopic?'true':'false');b.innerHTML='<span class="topic-head"><span class="topic-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icon[id]+'</svg></span><span class="check">✓</span></span><span class="topic-name"></span><span class="topic-hint"></span>';b.querySelector('.topic-name').textContent=name;b.querySelector('.topic-hint').textContent=hint;b.addEventListener('click',()=>{selectedTopic=id;render()});return b;}));}
+    function showNotice(message){const box=el('notice');box.textContent=message;box.classList.add('show');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>box.classList.remove('show'),5500)}
+    function release(){clearTimeout(closingTimer);microphone?.getTracks().forEach(track=>track.stop());try{events?.close()}catch{}try{peer?.close()}catch{}if(remoteAudio){remoteAudio.srcObject=null;remoteAudio.remove()}peer=null;microphone=null;events=null;remoteAudio=null}
+    function finish(message,permission=false){active=false;phase='idle';release();permissionBlocked=permission;render();if(message&&!permission)showNotice(message)}
+    function setPhase(next){if(!active)return;phase=next;render()}
+    function onLiveEvent(event){if(!event||typeof event.type!=='string')return;if(event.type==='session.started'){setPhase('listening');if(events?.readyState==='open'){events.send(JSON.stringify({type:'session.instructions.append',event_id:'opening-'+Date.now(),delegation_id:null,content:'Greet the person now warmly and naturally in '+({hi:'Hindi',pa:'Punjabi',en:'English',tr:'Turkish'}[language]||'Hindi')+'. Start speaking immediately. Welcome them to Active Partner, briefly reflect their chosen conversation topic, ask one easy open-ended question, then pause and listen. Keep it brief, friendly and natural.'}))}}else if(event.type==='session.closed'){finish('')}else if(event.type==='input_audio_buffer.speech_started'){setPhase('listening')}else if(event.type==='input_audio_buffer.speech_stopped'||event.type==='response.created'||event.type==='response.output_audio_transcription.started'){setPhase('thinking')}else if(event.type.includes('output_audio')&&event.type.includes('delta')){setPhase('speaking')}else if(event.type==='response.done'){setPhase('listening')}else if(event.type==='error'){const detail=event.error?.message;finish(detail||phrases[language].network)}}
+    function endLive(){if(events?.readyState==='open'){active=false;phase='idle';render();try{events.send(JSON.stringify({type:'session.close'}))}catch{}closingTimer=setTimeout(release,2500);return}finish('')}
+    async function startLive(){if(active){endLive();return}permissionBlocked=false;active=true;phase='connecting';render();try{if(!navigator.mediaDevices?.getUserMedia||!window.RTCPeerConnection)throw new Error(phrases[language].unsupported);microphone=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});if(!active){microphone.getTracks().forEach(track=>track.stop());return}peer=new RTCPeerConnection();remoteAudio=document.createElement('audio');remoteAudio.autoplay=true;remoteAudio.playsInline=true;remoteAudio.setAttribute('aria-hidden','true');remoteAudio.style.display='none';document.body.append(remoteAudio);peer.addEventListener('track',event=>{remoteAudio.srcObject=event.streams[0]||new MediaStream([event.track]);remoteAudio.play().catch(()=>showNotice(phrases[language].network))});microphone.getAudioTracks().forEach(track=>peer.addTrack(track,microphone));events=peer.createDataChannel('oai-events');events.addEventListener('message',({data})=>{try{onLiveEvent(JSON.parse(data))}catch{}});events.addEventListener('open',()=>{if(active)setPhase('listening')});events.addEventListener('close',()=>{if(active)finish(phrases[language].network)});peer.addEventListener('connectionstatechange',()=>{if(peer?.connectionState==='failed'||peer?.connectionState==='disconnected')finish(phrases[language].network)});const offer=await peer.createOffer();await peer.setLocalDescription(offer);if(peer.iceGatheringState!=='complete')await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(new Error(phrases[language].network)),12000);const check=()=>{if(peer?.iceGatheringState==='complete'){clearTimeout(timeout);peer.removeEventListener('icegatheringstatechange',check);resolve()}};peer.addEventListener('icegatheringstatechange',check);check()});const sdp=peer.localDescription?.sdp;if(!sdp)throw new Error(phrases[language].network);const accessCode=localStorage.getItem('activePartnerAccessCode')||window.prompt(language==='en'?'Enter your private app access code:':language==='pa'?'ਆਪਣਾ ਨਿੱਜੀ ਐਪ ਐਕਸੈੱਸ ਕੋਡ ਦਰਜ ਕਰੋ:':language==='tr'?'Özel uygulama erişim kodunuzu girin:':'Apna private app access code daalein:');if(!accessCode){throw new Error(language==='en'?'An app access code is required.':language==='pa'?'ਐਪ ਐਕਸੈੱਸ ਕੋਡ ਲੋੜੀਂਦਾ ਹੈ।':language==='tr'?'Uygulama erişim kodu gerekli.':'App access code zaroori hai.')}localStorage.setItem('activePartnerAccessCode',accessCode);const response=await fetch('./api/session',{method:'POST',headers:{'Content-Type':'application/json','X-App-Access-Code':accessCode},body:JSON.stringify({sdp,language,topic:selectedTopic})});if(!response.ok){if(response.status===401){localStorage.removeItem('activePartnerAccessCode');throw new Error(language==='en'?'That app access code is not correct.':language==='pa'?'ਐਪ ਐਕਸੈੱਸ ਕੋਡ ਠੀਕ ਨਹੀਂ ਹੈ।':language==='tr'?'Uygulama erişim kodu doğru değil.':'App access code sahi nahi hai.')}const payload=await response.json().catch(()=>({}));throw new Error(payload.error||phrases[language].network)}const result=await response.json();await peer.setRemoteDescription({type:'answer',sdp:result.transport.sdp});}catch(error){const msg=String(error?.message||'');const denied=error?.name==='NotAllowedError'||error?.name==='PermissionDeniedError';finish(denied?phrases[language].permissionError:msg||phrases[language].network,denied)}}
+    el('language').addEventListener('change',e=>{language=e.target.value;render()});
+    el('talk').addEventListener('click',startLive);
+    el('retryMic').addEventListener('click',startLive);
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&active){/* Keep the live audio session while a notification or app switch is visible. */}});
+    window.addEventListener('pagehide',()=>{if(active){try{events?.send(JSON.stringify({type:'session.close'}))}catch{}release()}});
+    render();
+    if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+  </script>
+</body>
+</html>
