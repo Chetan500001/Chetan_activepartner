@@ -1,0 +1,22 @@
+ACTIVE PARTNER — LIVE AI + PHONE INSTALL
+
+This folder contains the phone-ready app files. The live voice AI also needs
+the `functions` folder, hosted securely; GitHub Pages cannot run that server.
+
+1. Put the contents of this folder (including `functions`) in the ROOT of a
+   GitHub repository. Do not upload the `phone-app` folder as one nested folder.
+2. Create a Cloudflare Pages project connected to that repository. Use no build
+   command and set the output directory to `.`. Keep `functions/api/session.js`
+   at that exact path in the repository root.
+3. In Cloudflare Pages Settings → Variables and Secrets, add encrypted secrets:
+   OPENAI_API_KEY (your OpenAI API project key) and
+   ACTIVE_PARTNER_ACCESS_CODE (a long private code you create). Redeploy after
+   adding them. Never commit or share the API key.
+4. Open the Cloudflare HTTPS link on your phone and allow microphone access.
+   Tap the mic and enter the private app access code when asked.
+5. Android: in Chrome, open ⋮ and choose Install app or Add to Home screen.
+   iPhone: in Safari, tap Share → Add to Home Screen.
+
+OpenAI API voice and reasoning usage can incur charges separately from ChatGPT.
+Set an API usage limit before starting a conversation. Keep the app link and
+access code private; a shared code is only a basic personal-use gate.
